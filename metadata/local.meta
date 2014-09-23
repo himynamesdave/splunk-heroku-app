@@ -1,0 +1,39 @@
+[app/ui]
+version = 6.1.3
+modtime = 1411502159.315243000
+
+[app/launcher]
+version = 6.1.3
+modtime = 1411502159.316307000
+
+[app/package/check_for_updates]
+version = 6.1.3
+modtime = 1411502159.317350000
+
+[views/application_statistics]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = admin
+version = 6.1.3
+modtime = 1411506304.571589000
+
+[nav/default]
+version = 6.1.3
+modtime = 1411506124.589264000
+
+[views/heroku_errors]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = admin
+version = 6.1.3
+modtime = 1411506468.720264000
+
+[views/load_average]
+owner = admin
+version = 6.1.3
+modtime = 1411506628.745137000
+
+[views/memory_usage]
+owner = admin
+version = 6.1.3
+modtime = 1411506675.644278000

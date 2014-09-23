@@ -4,8 +4,6 @@
 
 *.pydevproject
 .project
-.metadata
-bin/
 tmp/
 *.tmp
 *.bak
@@ -47,7 +45,6 @@ local.properties
 *_i.c
 *_p.c
 *.ilk
-*.meta
 *.obj
 *.pch
 *.pdb
@@ -100,12 +97,10 @@ DocProject/Help/html
 publish
 
 # Others
-[Bb]in
 [Oo]bj
 sql
 TestResults
 *.Cache
-ClientBin
 stylecop.*
 ~$*
 *.dbmdl
@@ -145,10 +140,3 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
-
-###############
-## Project Files
-###############
-*.ini
-fitbit_config.ini
-
