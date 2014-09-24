@@ -6,8 +6,10 @@
    <h2>Welcome to the Splunk app for Heroku</h2>
    <p><strong>Thanks for downloading the Splunk app for Heroku</strong>, it's great to see you here. Introductions over, lets get down to business.</p>
    <p><strong>Important:</strong> this app will NOT work unless you follow the setup instructions below - they're super simple to setup, I promise.</p>
+   <hr />
    <h2>I'm 12, what is this?</h2>
-   <p>The Splunk app for Heroku helps guide you through improving the logging fucntionality of your Heroku app, and how to get these logs into Splunk for analysis. To help you get started this app comes prebuilt with searches powering a number of dashboards and alerts for the ingested log data.</p>
+   <p>The Splunk app for Heroku helps guide you through improving the logging functionality of your Heroku app, and how to get these logs into Splunk for analysis. To help you get started this app comes prebuilt with searches powering a number of dashboards and alerts for the ingested log data.</p>
+   <hr />
    <h2>What's in the box?</h2>
    <ul>
    	<li>1 x New Index (index=heroku)</li>
@@ -16,6 +18,7 @@
    	<li>3 x Prebuilt Alerts (app response time)</li>
    	<li>1 x Important Setup Instructions (you are here)</li>
    </ul>
+   <hr />
    <h2>Setup</h2>
    <p><strong>Overview</strong></p>
    <p>There are 4 steps you will need to get this app working.</p>
@@ -25,7 +28,6 @@
    	<li>Point Heroku syslog drain at Splunk</li>
    	<li>Profit</li>
    </ul>
-   <hr />
    <p><strong>1) Configure logging on Heroku</strong></p>
    <p>The searches used in this app require some <a href="https://devcenter.heroku.com/categories/labs" target="_blank">Heroku labs features</a> to be enabled.</p>
    <p>Assuming you have the <a href="https://toolbelt.heroku.com/" target="_blank">Heroku toolbelt installed</a>, you should run the following commands from the CLI.</p>
@@ -35,18 +37,17 @@
    <p><code>heroku labs:enable log-runtime-metrics --app "YOUR_APP_NAME"</code></p>
    <p>Restart your app to configure changes:</p>
    <p><code>heroku restart --app "YOUR_APP_NAME"</code></p>
-   <hr />
    <p><strong>2) Set up Splunk input</strong></p>
    <p>When installed this app will do two things: 1) Create a TCP input for port:514 (switched off by default), and 2) Create a new index called "Heroku"</p>
-   <p>You must enable this input by navigating to: "Settings" > "Data Inputs" > "TCP"</p>
+   <p>You can enable this input in the Splunk GUI by navigating to: "Settings" > "Data Inputs" > "TCP"</p>
    <p><em><strong>Important:</strong> It is essential the port you choose is open and traffic is not blocked.</em></p>
-   <hr />
    <p><strong>3) Point Heroku syslog drain at Splunk</strong></p>
    <p>Now we need to direct the newly enabled Heroku logs at this source. In the CLI you can do this by running the following commands:</p>
    <p><code>heroku drains:add syslog://"YOUR_INDEXER'S_IP":"PORT_FOR_INPUT" --app "YOUR_APP_NAME"</code></p>
-   <hr />
    <p><strong>4) Profit</strong></p>
    <p>If everything has worked well, a simple search for "index=heroku" should return some results. You might need to restart Splunk first.</p>
+   <p>Should some of the dashboards be empty, run a search in Splunk to see if the fields used are in your logs. If you're still suspicious, check Heroku logging has been set correctly at step 1. <em>Sometimes you may not have any logs that populate the search - this is usually a good thing where errors are concerened.</em></p>
+   <hr />
    <p>Enjoy!</p>
    <p><strong><a href="https://twitter.com/himynamesdave" target="_blank">@himynamesdave</a></strong></p>
  </html>

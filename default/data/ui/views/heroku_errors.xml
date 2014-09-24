@@ -1,28 +1,20 @@
 <form>
   <label>heroku errors</label>
   <fieldset autoRun="true" submitButton="false">
-    <input type="time" searchWhenChanged="true">
-    </input>
+    <input type="time" searchWhenChanged="true"/>
   </fieldset>
   <row>
     <panel>
       <table>
         <title>basic delayed job stats</title>
-        <searchString>index=heroku jobs processed at"
-  | rex "app (?&lt;dyno&gt;\w+\.\d+) -" 
-  | regex dyno="worker"
-  | rex "(?&lt;completed&gt;\d+) jobs processed at (?&lt;per_second&gt;\d+(.\d+)?) j/s, (?&lt;failed&gt;\d+) failed ..."
-  | eval jobs_completed=tonumber(completed) 
-  | eval jobs_per_second=tonumber(per_second) 
-  | eval jobs_failed=tonumber(failed) 
-  | eval jobs_count=jobs_completed + jobs_failed
-  | eval jobs_avg_runtime=jobs_per_second/jobs_count
-  | timechart span=3h sum(jobs_count) as "# jobs"
-                    , sum(jobs_failed) as "# failed"
-                    , perc95(jobs_avg_runtime) as "95th run-time"
-                    , avg(jobs_avg_runtime) as "avg run-time"</searchString>
-        <earliestTime/>
+        <searchString>index=heroku "jobs processed at"   | rex "app (?&lt;dyno&gt;\w+\.\d+) -"    | regex dyno="worker"   | rex "(?&lt;completed&gt;\d+) jobs processed at (?&lt;per_second&gt;\d+(.\d+)?) j/s, (?&lt;failed&gt;\d+) failed ..."   | eval jobs_completed=tonumber(completed)    | eval jobs_per_second=tonumber(per_second)    | eval jobs_failed=tonumber(failed)    | eval jobs_count=jobs_completed + jobs_failed   | eval jobs_avg_runtime=jobs_per_second/jobs_count   | timechart span=3h sum(jobs_count) as "# jobs"                     , sum(jobs_failed) as "# failed"                     , perc95(jobs_avg_runtime) as "95th run-time"                     , avg(jobs_avg_runtime) as "avg run-time"</searchString>
+        <earliestTime>0</earliestTime>
         <latestTime/>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="count">10</option>
       </table>
     </panel>
   </row>
@@ -36,13 +28,18 @@
       </table>
     </panel>
   </row>
-    <row>
+  <row>
     <panel>
       <table>
         <title>generic errors (server only)</title>
-        <searchString>at=index=heroku error | regex source!="client" | timechart span="1hr" count by desc</searchString>
-        <earliestTime/>
+        <searchString>index=heroku at=error | regex source!="client" | timechart span="1hr" count by desc</searchString>
+        <earliestTime>0</earliestTime>
         <latestTime/>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="count">10</option>
       </table>
     </panel>
   </row>

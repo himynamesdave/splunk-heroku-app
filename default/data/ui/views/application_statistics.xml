@@ -1,8 +1,7 @@
 <form>
   <label>application statistics</label>
   <fieldset autoRun="true" submitButton="false">
-    <input type="time" searchWhenChanged="true">
-    </input>
+    <input type="time" searchWhenChanged="true"/>
   </fieldset>
   <row>
     <panel>
@@ -36,7 +35,7 @@
   </row>
   <row>
     <panel>
-      <chart>
+      <table>
         <title>requests / timeouts</title>
         <searchString>index=heroku    | regex method="GET|POST|PUT|DELETE"    | timechart span="1m" count as "# requests"                       , count(eval(match(status, "503"))) as "# timeouts"</searchString>
         <earliestTime/>
@@ -59,7 +58,11 @@
         <option name="charting.layout.splitSeries">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.placement">right</option>
-      </chart>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+      </table>
     </panel>
     <panel>
       <table>
