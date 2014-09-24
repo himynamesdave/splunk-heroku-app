@@ -1,0 +1,82 @@
+<form>
+  <label>load average</label>
+  <fieldset autoRun="true" submitButton="false">
+    <input type="time" searchWhenChanged="true">
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <title>load average/min/max for all services (includes web, workers, jobs, scheduler, other)</title>
+        <searchString>index=heroku | timechart span="15m" avg(load_avg_5m) as avg, max(load_avg_5m) as max, min(load_avg_5m) as min by sourcetype</searchString>
+        <earliestTime/>
+        <latestTime/>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>load average/min/max by application (web/workers)</title>
+        <searchString>index=heroku 
+  | rex "(heroku|app) (?&lt;dyno&gt;\w+\.\d+) -" 
+  | regex dyno="(web|worker)"
+  | timechart span="15m" avg(load_avg_5m) as avg, max(load_avg_5m) as max, min(load_avg_5m) as min by sourcetype</searchString>
+        <earliestTime/>
+        <latestTime/>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>load avg/min/max load by web</title>
+        <searchString>index=heroku 
+  | rex "heroku (?&lt;dyno&gt;\w+\.\d+) -" 
+  | regex dyno="web"
+  | timechart span="3hr" avg(load_avg_5m) as "average load", min(load_avg_5m) as "min load", max(load_avg_5m) as "max load"</searchString>
+        <earliestTime/>
+        <latestTime/>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>load average by web dyno</title>
+        <searchString>index=heroku  
+  | rex "(heroku|app) (?&lt;dyno&gt;\w+\.\d+) -" 
+  | regex dyno="web"
+  | timechart span="15m" avg(load_avg_5m) as avg by dyno</searchString>
+        <earliestTime/>
+        <latestTime/>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>load avg/min/max load by workers</title>
+        <searchString>index=heroku  
+  | rex "heroku (?&lt;dyno&gt;\w+\.\d+) -" 
+  | regex dyno="worker"
+  | timechart span="3hr" avg(load_avg_5m) as "average load", min(load_avg_5m) as "min load", max(load_avg_5m) as "max load"</searchString>
+        <earliestTime/>
+        <latestTime/>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>load average by worker dyno</title>
+        <searchString>index=heroku 
+  | rex "(heroku|app) (?&lt;dyno&gt;\w+\.\d+) -" 
+  | regex dyno="worker"
+  | timechart span="15m" avg(load_avg_5m) as avg by dyno</searchString>
+        <earliestTime/>
+        <latestTime/>
+      </table>
+    </panel>
+  </row>
+</form>
