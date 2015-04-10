@@ -63,7 +63,7 @@ In the CLI you can do this by running the following commands:
 
 Stop Splunk and open the following file:
 
-```<SPLUNK_HOME>/etc/apps/splunk-heroku-app/lookups/app_name.csv```
+```SPLUNK_HOME/etc/apps/splunk-heroku-app/lookups/app_name.csv```
 
 In the host column you will need to specify the application identifier provided by Heroku. You can find this identifier in the "host" field of your Heroku event logs in Splunk.
 
