@@ -1,0 +1,3 @@
+host,app_name,app_url
+"ec2-54-234-192-190.compute-1.amazonaws.com","myApp0","http://www.myapp2.com"
+"d.c6ec6a7b-c653-4024-8148-7a1adef1d5fd","myApp1","http://www.myapp1.com"

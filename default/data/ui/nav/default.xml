@@ -1,14 +1,7 @@
 <nav search_view="search" color="#5b518c">
-  <view name="search" default='true' />
-  <view name="application_statistics" />
-  <view name="heroku_errors" />
-  <view name="load_average" />
-  <view name="memory_usage" />
+  <view name="app_analytics" default='true' />
+  <view name="app_performance" />
+  <view name="app_errors" />
+  <view name="search"  />
   <view name="alerts" />
-
-  <collection label="help!">
-	<view name="setup" />
-	<view name="ask_splunk_anything" />
-  <view name="fork_me" />
-  </collection>
 </nav>

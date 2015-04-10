@@ -1,0 +1,153 @@
+<form>
+  <label>App Performance</label>
+  <fieldset submitButton="true">
+    <input type="dropdown" token="app_name_token">
+      <label>App</label>
+      <search>
+        <query>index=heroku | stats count by "app_name"</query>
+      </search>
+      <fieldForLabel>app_name</fieldForLabel>
+      <fieldForValue>app_name</fieldForValue>
+      <default>*</default>
+      <choice value="*">All</choice>
+    </input>
+    <input type="time">
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Average Page Load Times</title>
+      <chart>
+        <search>
+          <query>index=heroku app_name="$app_name_token$" path!=*.* | eval response_time=tonumber(replace(service, "[ms]", "")) | eval "AverageResponseS"=round(response_time/1000,2) | timechart avg(AverageResponseS) AS AverageResponseS</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">false</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Seconds</option>
+        <option name="charting.seriesColors">[0x5b518c]</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Slowest Pages</title>
+      <table>
+        <search>
+          <query>index=heroku app_name="$app_name_token$" path!=*.* | eval response_time=tonumber(replace(service, "[ms]", "")) | stats avg(response_time) AS "AverageResponseMS" by path | eval "AverageResponseTimeSec"=round(AverageResponseMS/1000,2) | fields path AverageResponseTimeSec | sort -AverageResponseTimeSec | rename path AS Page</query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">row</option>
+        <option name="count">10</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Slowest Assets</title>
+      <table>
+        <search>
+          <query>index=heroku app_name="$app_name_token$" path=*.* | eval response_time=tonumber(replace(service, "[ms]", "")) | stats avg(response_time) AS "AverageResponseMS" by path | eval "AverageResponseTimeSec"=round(AverageResponseMS/1000,2) | fields path AverageResponseTimeSec | sort -AverageResponseTimeSec | rename path AS Asset</query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">row</option>
+        <option name="count">10</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average Web Dyno Memory</title>
+      <chart>
+        <search>
+          <query>index=heroku app_name="$app_name_token$" | rex "(heroku|app) (?&lt;dyno&gt;\w+\.\d+) -" | regex dyno="web" | timechart avg(memory_total) as AvgMem by dyno</query>
+        </search>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="count">10</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">false</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleY.text">Memory</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.seriesColors">[0x5b518c]</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Average Web Dyno Load</title>
+      <chart>
+        <search>
+          <query>index=heroku app_name="$app_name_token$" | rex "(heroku|app) (?&lt;dyno&gt;\w+\.\d+) -" | regex dyno="web" | timechart avg(load_avg_5m) as AvgLoad by dyno</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.enabled">false</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleY.text">Load</option>
+        <option name="charting.seriesColors">[0x5b518c]</option>
+      </chart>
+    </panel>
+  </row>
+</form>
