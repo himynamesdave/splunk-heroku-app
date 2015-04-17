@@ -73,7 +73,7 @@ You can then set a more user friendly name for searching in the "app_name" colum
 
 Note: If you cannot install the "Lookup Editor" app you can perform this process manually. Stop Splunk and open the following file to edit:
 
-```<SPLUNK_HOME>/etc/apps/splunk-heroku-app/lookups/app_name.csv```
+```$ SPLUNK_HOME/etc/apps/splunk-heroku-app/lookups/app_name.csv```
 
 **5) Turn on alerts**
 
