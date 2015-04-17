@@ -23,7 +23,7 @@
       <title>Average Page Load Times</title>
       <chart>
         <search>
-          <query>index=heroku app_name="$app_name_token$" path!=*.* | eval response_time=tonumber(replace(service, "[ms]", "")) | eval "AverageResponseS"=round(response_time/1000,2) | timechart avg(AverageResponseS) AS AverageResponseS</query>
+          <query>index=heroku app_name="$app_name_token$" path!=*.* | eval response_time=tonumber(replace(service, "[ms]", "")) | eval page_url=app_url."".path | eval "AverageResponseS"=round(response_time/1000,2) | timechart avg(AverageResponseS) AS AverageResponseS</query>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
@@ -57,7 +57,7 @@
       <title>Slowest Pages</title>
       <table>
         <search>
-          <query>index=heroku app_name="$app_name_token$" path!=*.* | eval response_time=tonumber(replace(service, "[ms]", "")) | stats avg(response_time) AS "AverageResponseMS" by path | eval "AverageResponseTimeSec"=round(AverageResponseMS/1000,2) | fields path AverageResponseTimeSec | sort -AverageResponseTimeSec | rename path AS Page</query>
+          <query>index=heroku app_name="$app_name_token$" path!=*.* | eval response_time=tonumber(replace(service, "[ms]", "")) | eval asset_url=app_url."".path | stats avg(response_time) AS "AverageResponseMS" by path | eval "AverageResponseTimeSec"=round(AverageResponseMS/1000,2) | fields path AverageResponseTimeSec | sort -AverageResponseTimeSec | rename path AS Page</query>
         </search>
         <option name="wrap">true</option>
         <option name="rowNumbers">false</option>

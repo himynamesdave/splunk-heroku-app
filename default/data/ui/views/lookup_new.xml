@@ -1,0 +1,16 @@
+<view template="dashboard.html" isDashboard="false">
+  
+  <label>Create New Lookup File</label>
+  
+  <module name="AccountBar" layoutPanel="appHeader"/>
+  <module name="AppBar" layoutPanel="navigationHeader"/>
+  <module name="Message" layoutPanel="messaging">
+    <param name="filter">*</param>
+    <param name="clearOnJobDispatch">False</param>
+    <param name="maxSize">2</param>
+  </module>
+  <module name="LookupFileEditor" layoutPanel="panel_row1_col1">
+    <param name="listView">lookup_list</param>
+  </module>
+
+</view>
