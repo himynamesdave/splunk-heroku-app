@@ -4,4 +4,9 @@
   <view name="app_errors" />
   <view name="search"  />
   <view name="alerts" />
+  <collection label="Lookups">
+  	<view name="lookup_edit" />
+  	<view name="lookup_list" />
+  	<view name="lookup_new" />
+  </collection>
 </nav>

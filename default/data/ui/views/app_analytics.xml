@@ -110,7 +110,7 @@
       <title>Top Viewed Pages</title>
       <table>
         <search>
-          <query>index=heroku path!=*.* app_name="$app_name_token$" | top limit=10 path | fields path count | rename path AS Page count AS VisitCount | sort -VisitCount</query>
+          <query>index=heroku path!=*.* app_name="$app_name_token$" | eval page_url=app_url."".path | top limit=10 path | fields path count | rename path AS Page count AS VisitCount | sort -VisitCount</query>
         </search>
         <option name="wrap">true</option>
         <option name="rowNumbers">false</option>
@@ -123,7 +123,7 @@
       <title>Top Viewed Assets</title>
       <table>
         <search>
-          <query>index=heroku path=*.* app_name="$app_name_token$" | top limit=10 path | fields path count | rename path AS Asset count AS ViewCount | sort -ViewCount</query>
+          <query>index=heroku path=*.* app_name="$app_name_token$" | eval asset_url=app_url."".path | top limit=10 path | fields path count | rename path AS Asset count AS ViewCount | sort -ViewCount</query>
         </search>
         <option name="wrap">true</option>
         <option name="rowNumbers">false</option>

@@ -61,13 +61,17 @@ In the CLI you can do this by running the following commands:
 
 **4) Define app names in lookup**
 
-Stop Splunk and open the following file:
+To get the "Lookups" tab working correctly you first need to install the app [**Lookup File Editor App for Splunk Enterprise**](https://splunkbase.splunk.com/app/1724/).
 
-```<SPLUNK_HOME>/etc/apps/splunk-heroku-app/lookups/app_name.csv```
+Once this is installed in the Splunk interface navigate to: "Lookups" > "View Lookup Files" > "app_data.csv"
 
 In the host column you will need to specify the application identifier provided by Heroku. You can find this identifier in the "host" field of your Heroku event logs in Splunk.
 
 You can then set a more user friendly name for searching in the "app_name" column. If desired, you can also specify a URL for the application to in the "app_url" column.
+
+Note: If you cannot install the "Lookup Editor" app you can perform this process manually. Stop Splunk and open the following file to edit:
+
+```<SPLUNK_HOME>/etc/apps/splunk-heroku-app/lookups/app_name.csv```
 
 **5) Turn on alerts**
 
