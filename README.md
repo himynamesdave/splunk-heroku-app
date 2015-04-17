@@ -63,11 +63,9 @@ In the CLI you can do this by running the following commands:
 
 To get the "Lookups" tab working correctly you first need to install the app [**Lookup File Editor App for Splunk Enterprise**](https://splunkbase.splunk.com/app/1724/).
 
-<<<<<<< HEAD
 ```$ /lookups/app_name.csv```
-=======
+
 Once this is installed in the Splunk interface navigate to: "Lookups" > "View Lookup Files" > "app_data.csv"
->>>>>>> v1.1
 
 In the host column you will need to specify the application identifier provided by Heroku. You can find this identifier in the "host" field of your Heroku event logs in Splunk.
 
